@@ -16,12 +16,12 @@ public: // Miembros públicos de la clase
 	
 	int tamano=0;
 	bool bordeimg=false;
-	std::vector<cv::Vec2i> PosAgu;
+	std::vector<cv::Vec2i> PosAgu; // Coordenadas de los píxeles del agujero en la imagen (x,y)
 
 public: // Funciones públicas de la clase
 
 	void AnalizaAguj(int posfil, int poscol, cv::Mat & imagenUmbral, cv::Mat & conect);
-	void ExtiendeAgujero(cv::Mat & imagensalida);
+	//void ExtiendeAgujero(cv::Mat & imagensalida);
 
 private: // Funciones privadas de la clase
 

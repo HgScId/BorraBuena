@@ -4,11 +4,11 @@
 
 void agujero::AnalizaAguj(int posfil, int poscol, cv::Mat & imagenUmbral, cv::Mat & conect)
 {
-	std::queue<cv::Vec2i> Extension;
+	std::queue<cv::Vec2i> Extension; // Cola donde se acumularán los píxeles pertenecientes al agujero
 	Extension.push({ posfil,poscol }); // introducimos el primer contenido detectado como último elemento (está vacío, se coloca el primero)
 	conect.at<unsigned char>(posfil, poscol) = 255; // Conectar el píxel inicial. Ya analizado.
-	tamano++;
-	PosAgu.push_back({ posfil,poscol });
+	tamano++; // El agujero tiene valor de 1 píxel por ahora.
+	PosAgu.push_back({ posfil,poscol }); // Al miembro de la clase que lista las posiciones de los agujeros se le añade la posición inicial detectada del agujero
 
 	while (!Extension.empty())
 	{
@@ -19,8 +19,9 @@ void agujero::AnalizaAguj(int posfil, int poscol, cv::Mat & imagenUmbral, cv::Ma
 		if (Extension.front().val[1] == 0) testcol1 = 0;
 		if (Extension.front().val[1] == conect.cols-1) testcol2 = 0;
 		
-		if (testcol1 == 0 || testcol2 == 0 || testfil1 == 0 || testfil2 == 0) bordeimg = true;
+		if (testcol1 == 0 || testcol2 == 0 || testfil1 == 0 || testfil2 == 0) bordeimg = true; // Si alguno de estos test da cero de resultado significa que estamos en el borde de la imagen.
 
+		// Búsqueda alrededor del píxel Agujero
 		for (int i = Extension.front().val[0] - testfil1; i <= Extension.front().val[0] + testfil2; i++)
 		{
 			for (int j = Extension.front().val[1] - testcol1; j <= Extension.front().val[1] + testcol2; j++)
@@ -37,12 +38,9 @@ void agujero::AnalizaAguj(int posfil, int poscol, cv::Mat & imagenUmbral, cv::Ma
 		}
 		Extension.pop(); // Se elimina de la queue el primer elemento.
 	}
-	
-
-
-
 }
-
+// La función de eliminar suciedad de la imagen no se terminó utilizando.
+/*
 void agujero::ExtiendeAgujero(cv::Mat & imagensalida)
 {
 	tamano = 0;
@@ -95,3 +93,4 @@ void agujero::ExtiendeAgujero(cv::Mat & imagensalida)
 		Extension.pop(); // Se elimina de la queue el primer elemento.
 	}
 }
+*/
